@@ -1,4 +1,13 @@
 <script setup lang="ts">
+import {
+  Apple,
+  Braces,
+  ExternalLink,
+  Globe,
+  MonitorSmartphone,
+  Puzzle,
+} from "@lucide/vue";
+import type { Component } from "vue";
 import { getToolBySlug } from "~/../utils/tools";
 
 const route = useRoute();
@@ -20,6 +29,18 @@ const keywords = [
   ...tool.features,
   ...tool.platforms,
 ].join(", ");
+
+const platformIcons: Record<string, Component> = {
+  Web: Globe,
+  Android: MonitorSmartphone,
+  iOS: Apple,
+  API: Braces,
+  "Chrome Extension": Puzzle,
+};
+
+function getPlatformIcon(platform: string) {
+  return platformIcons[platform] || Globe;
+}
 
 useSeoMeta({
   title: `${tool.name} - ${tool.category}`,
@@ -93,17 +114,29 @@ useHead({
         <a href="#" class="text-sm font-medium text-heading underline hover:no-underline">{{ tool.reviews }} reviews</a>
       </div>
 
-      <ul class="flex mt-2">
-        <li v-for="feature in tool.features" :key="feature">
-          <span
-            class="inline-flex items-center rounded-md bg-gray-400/10 px-2 py-1 text-xs font-medium text-gray-800 inset-ring inset-ring-gray-400/20 mr-2">
-            {{ feature }}
-          </span>
-        </li>
-      </ul>
+      <div class="mb-2 mt-4 flex flex-wrap items-center gap-2">
+        <span v-for="platform in tool.platforms" :key="platform"
+          class="inline-flex items-center gap-1.5 rounded-md bg-blue-400/10 px-2 py-1 text-xs font-medium text-blue-800 inset-ring inset-ring-blue-400/20">
+          <component :is="getPlatformIcon(platform)" class="h-3.5 w-3.5" />
+          {{ platform }}
+        </span>
+      </div>
 
-      <a :href="tool.website" target="_blank" rel="noopener noreferrer">
-        <p class="mt-4 text-sm text-blue-800">Visit Website</p>
+      <div class="mt-2">
+        <ul class="flex gap-2 overflow-x-auto scroll-smooth whitespace-nowrap">
+          <li v-for="feature in tool.features" :key="feature" class="shrink-0">
+            <span
+              class="inline-flex items-center rounded-md bg-gray-400/10 px-2 py-1 text-xs font-medium text-gray-800 inset-ring inset-ring-gray-400/20">
+              {{ feature }}
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <a :href="tool.website" target="_blank" rel="noopener noreferrer"
+        class="mt-5 inline-flex items-center gap-2 rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        Visit Website
+        <ExternalLink class="h-4 w-4" />
       </a>
     </article>
   </main>
