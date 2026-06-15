@@ -11,7 +11,7 @@ if (!tool) {
   });
 }
 
-const siteUrl = "https://your-domain.com";
+const siteUrl = "https://holink-solusi-digital.vercel.app";
 const canonical = `${siteUrl}/tools/${tool.slug}`;
 const keywords = [
   tool.name,
