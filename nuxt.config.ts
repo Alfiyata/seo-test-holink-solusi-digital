@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/sitemap", "@nuxtjs/robots"],
 
   site: {
-    url: "http://localhost:3000",
+    url: "https://holink-solusi-digital.vercel.app",
     name: "SEO Tools",
   },
 
@@ -33,6 +33,6 @@ export default defineNuxtConfig({
 
   robots: {
     allow: "/",
-    sitemap: "http://localhost:3000/sitemap.xml",
+    sitemap: "https://holink-solusi-digital.vercel.app/sitemap.xml",
   },
 });
